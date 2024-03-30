@@ -1,12 +1,16 @@
 class FacebookFocusMode {
-    isActivated;
     textsToHide;
+    #isActivated;
     #throttledHideDivsWithSpecificSpans;
 
     constructor(textsToHide = []) {
-        this.isActivated = false;
         this.textsToHide = textsToHide;
+        this.#isActivated = false;
         this.#throttledHideDivsWithSpecificSpans = _.throttle(this.#hideDivsWithSpecificSpans, 100);
+    }
+
+    get isActivated() {
+        return this.#isActivated;
     }
 
     #hideDivsWithSpecificSpans = () => {
@@ -55,7 +59,7 @@ class FacebookFocusMode {
 
     #handleKeyDown = (event) => {
         if (event.ctrlKey && event.shiftKey && event.key === 'F') {
-            this.isActivated = !this.isActivated;
+            this.#isActivated = !this.#isActivated;
             this.#updatePageState();
         }
     };

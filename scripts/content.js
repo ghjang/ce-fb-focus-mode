@@ -1,10 +1,7 @@
 const textsToHide = ['광고', '릴스 및 짧은 동영상'];
 
-
-let isActivated = false;
-
 const hideDivsWithSpecificSpans = () => {
-    if (!isActivated) return;
+    console.log('hideDivsWithSpecificSpans called');
 
     const divs = document.querySelectorAll('div[data-pagelet^="FeedUnit_"]:not([style*="display: none"])');
     divs.forEach(div => {
@@ -38,18 +35,39 @@ const hideSidebars = (hide = true) => {
 };
 
 
-window.addEventListener('keydown', (event) => {
+let g_isActivated = false;
+
+const updatePageState = () => {
+    window.removeEventListener('scroll', hideDivsWithSpecificSpans);
+
+    if (g_isActivated) {
+        hideDivsWithSpecificSpans();
+        window.addEventListener('scroll', hideDivsWithSpecificSpans);
+    }
+
+    hideStoriesPageLet(g_isActivated);
+    hideSidebars(g_isActivated);
+};
+
+const handleKeyDown = (event) => {
     if (event.ctrlKey && event.shiftKey && event.key === 'F') {
-        isActivated = !isActivated;
+        g_isActivated = !g_isActivated;
+        updatePageState();
+    }
+};
 
-        if (isActivated) {
-            hideDivsWithSpecificSpans();
-            window.addEventListener('scroll', hideDivsWithSpecificSpans);
-        } else {
-            window.removeEventListener('scroll', hideDivsWithSpecificSpans);
+
+window.addEventListener('keydown', handleKeyDown);
+
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.message === 'urlChanged') {
+        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('scroll', hideDivsWithSpecificSpans);
+
+        if (request.url === 'https://www.facebook.com/') {
+            window.addEventListener('keydown', handleKeyDown);
+            updatePageState();
         }
-
-        hideStoriesPageLet(isActivated);
-        hideSidebars(isActivated);
     }
 });

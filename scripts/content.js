@@ -53,8 +53,10 @@ class FacebookFocusMode {
             window.addEventListener('scroll', this.#throttledHideDivsWithSpecificSpans);
         }
 
-        this.#hideStoriesPageLet();
-        this.#hideSidebars();
+        setTimeout(() => {
+            this.#hideStoriesPageLet();
+            this.#hideSidebars();
+        }, 100);
     };
 
     #handleKeyDown = (event) => {

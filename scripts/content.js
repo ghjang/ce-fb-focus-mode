@@ -37,12 +37,14 @@ const hideSidebars = (hide = true) => {
 
 let g_isActivated = false;
 
+const throttledHideDivsWithSpecificSpans = _.throttle(hideDivsWithSpecificSpans, 100);
+
 const updatePageState = () => {
-    window.removeEventListener('scroll', hideDivsWithSpecificSpans);
+    window.removeEventListener('scroll', throttledHideDivsWithSpecificSpans);
 
     if (g_isActivated) {
-        hideDivsWithSpecificSpans();
-        window.addEventListener('scroll', hideDivsWithSpecificSpans);
+        throttledHideDivsWithSpecificSpans();
+        window.addEventListener('scroll', throttledHideDivsWithSpecificSpans);
     }
 
     hideStoriesPageLet(g_isActivated);
@@ -63,7 +65,7 @@ window.addEventListener('keydown', handleKeyDown);
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === 'urlChanged') {
         window.removeEventListener('keydown', handleKeyDown);
-        window.removeEventListener('scroll', hideDivsWithSpecificSpans);
+        window.removeEventListener('scroll', throttledHideDivsWithSpecificSpans);
 
         if (request.url === 'https://www.facebook.com/') {
             window.addEventListener('keydown', handleKeyDown);

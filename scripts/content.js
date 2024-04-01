@@ -60,7 +60,7 @@ class FacebookFocusMode {
     };
 
     #handleKeyDown = (event) => {
-        if (event.ctrlKey && event.shiftKey && event.key === 'F') {
+        if (event.ctrlKey && event.shiftKey && (event.key === 'F' || event.key === 'ㄹ')) {
             this.#isActivated = !this.#isActivated;
             this.#updatePageState();
         }

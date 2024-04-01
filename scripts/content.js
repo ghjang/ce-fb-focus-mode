@@ -85,5 +85,5 @@ class FacebookFocusMode {
 }
 
 
-const facebookFocusMode = new FacebookFocusMode(['광고', '릴스 및 짧은 동영상']);
+const facebookFocusMode = new FacebookFocusMode(['광고', '릴스 및 짧은 동영상', '알 수도 있는 사람']);
 facebookFocusMode.run();

@@ -6,6 +6,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             chrome.tabs.sendMessage(tabId, {
                 message: 'urlChanged',
                 url: cleanUrl
+            }).catch(error => {
+                console.error('error sending message to content script:', error);
             });
         }
     }

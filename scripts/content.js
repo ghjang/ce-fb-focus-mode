@@ -63,6 +63,16 @@ class FacebookFocusMode {
         if (event.ctrlKey && event.shiftKey && (event.key === 'F' || event.key === 'ㄹ')) {
             this.#isActivated = !this.#isActivated;
             this.#updatePageState();
+        } else {
+            console.debug(
+`\tKey: ${event.key}
+\tCode: ${event.code}
+\tAlt key: ${event.altKey}
+\tCtrl key: ${event.ctrlKey}
+\tShift key: ${event.shiftKey}
+\tMeta key: ${event.metaKey}
+\tKey location: ${event.location}
+\tRepeat: ${event.repeat}`);
         }
     };
 

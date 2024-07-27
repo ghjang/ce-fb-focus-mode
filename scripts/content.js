@@ -14,7 +14,7 @@ class FacebookFocusMode {
     }
 
     #hideDivsWithSpecificSpans = () => {
-        console.log('hideDivsWithSpecificSpans called');
+        //console.log('hideDivsWithSpecificSpans called');
 
         const divs = document.querySelectorAll('div[data-pagelet^="FeedUnit_"]:not([style*="display: none"])');
         divs.forEach(div => {
@@ -23,6 +23,7 @@ class FacebookFocusMode {
                 if (this.textsToHide.includes(span.textContent.trim())) {
                     div.style.display = 'none';
                     div.setAttribute('data-fb-focus-mode', '');
+                    console.log(`hidden: ${span.textContent}`);
                 }
             });
         });
@@ -65,7 +66,7 @@ class FacebookFocusMode {
             this.#updatePageState();
         } else {
             console.debug(
-`\tKey: ${event.key}
+                `\tKey: ${event.key}
 \tCode: ${event.code}
 \tAlt key: ${event.altKey}
 \tCtrl key: ${event.ctrlKey}
@@ -95,5 +96,11 @@ class FacebookFocusMode {
 }
 
 
-const facebookFocusMode = new FacebookFocusMode(['광고', '릴스 및 짧은 동영상', '알 수도 있는 사람']);
+const facebookFocusMode
+    = new FacebookFocusMode([
+        '광고',
+        '릴스 및 짧은 동영상',
+        '알 수도 있는 사람',
+        '팔로우'
+    ]);
 facebookFocusMode.run();

@@ -101,6 +101,7 @@ const facebookFocusMode
         '광고',
         '릴스 및 짧은 동영상',
         '알 수도 있는 사람',
-        '팔로우'
+        '팔로우',
+        '가입'
     ]);
 facebookFocusMode.run();
